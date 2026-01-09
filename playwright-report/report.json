@@ -65,7 +65,7 @@
       "line": 0,
       "specs": [
         {
-          "title": "cover options change based on age",
+          "title": "Test rules for Alice on https://example.com/page1",
           "ok": true,
           "tags": [],
           "tests": [
@@ -80,12 +80,16 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 27,
+                  "duration": 3148,
                   "errors": [],
-                  "stdout": [],
+                  "stdout": [
+                    {
+                      "text": "Name: Alice, URL: https://example.com/page1, Age: 49, Cover options: Basic,Premium,Family\n"
+                    }
+                  ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-01-09T11:40:55.090Z",
+                  "startTime": "2026-01-09T13:27:58.479Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -93,19 +97,133 @@
               "status": "expected"
             }
           ],
-          "id": "5947b461d8505a22fe31-de101f8d420ff2fea86c",
+          "id": "5947b461d8505a22fe31-45362d4aa31efe966baf",
           "file": "rules.spec.ts",
-          "line": 50,
-          "column": 5
+          "line": 59,
+          "column": 9
+        },
+        {
+          "title": "Test rules for Bob on https://example.com/page1",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 233,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "Name: Bob, URL: https://example.com/page1, Age: 19, Cover options: Basic,Family\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-01-09T13:28:09.266Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5947b461d8505a22fe31-ca9fd794a23a910b2262",
+          "file": "rules.spec.ts",
+          "line": 59,
+          "column": 9
+        },
+        {
+          "title": "Test rules for Alice on https://example.com/page2",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 281,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "Name: Alice, URL: https://example.com/page2, Age: 43, Cover options: Basic,Premium,Family\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-01-09T13:28:09.534Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5947b461d8505a22fe31-f8c37bb59edc4aeddb75",
+          "file": "rules.spec.ts",
+          "line": 59,
+          "column": 9
+        },
+        {
+          "title": "Test rules for Bob on https://example.com/page2",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 267,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "Name: Bob, URL: https://example.com/page2, Age: 66, Cover options: Basic\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-01-09T13:28:09.850Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5947b461d8505a22fe31-7718b47a85f667b959a1",
+          "file": "rules.spec.ts",
+          "line": 59,
+          "column": 9
         }
       ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-01-09T11:40:53.599Z",
-    "duration": 1623.0479999999998,
-    "expected": 1,
+    "startTime": "2026-01-09T13:27:56.293Z",
+    "duration": 13983.129,
+    "expected": 4,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

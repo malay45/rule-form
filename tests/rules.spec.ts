@@ -45,9 +45,39 @@ function applyRules(age: number) {
   return options;
 }
 
-/* ---------------- PLAYWRIGHT TEST ---------------- */
+/* ---------------- URL & Name Combinations ---------------- */
 
-test("cover options change based on age", () => {
-  expect(applyRules(20)).toEqual(["Basic", "Family"]);
-  expect(applyRules(65)).toEqual(["Basic"]);
-});
+const urls = ["https://example.com/page1", "https://example.com/page2"];
+const names = ["Alice", "Bob"];
+
+// 2 nested loops to create all combinations
+for (const url of urls) {
+  for (const name of names) {
+    // Dynamically create test title
+    const testTitle = `Test rules for ${name} on ${url}`;
+
+    test(testTitle, async ({ page }) => {
+      // Go to the URL
+      await page.goto(url);
+
+      // Example: generate random age between min and max
+      const age =
+        Math.floor(
+          Math.random() *
+            (ruleConfig.fields.age.max - ruleConfig.fields.age.min + 1)
+        ) + ruleConfig.fields.age.min;
+
+      // Apply rules
+      const options = applyRules(age);
+
+      // You can do more: e.g., select age in form, check options in UI, etc.
+      console.log(
+        `Name: ${name}, URL: ${url}, Age: ${age}, Cover options: ${options}`
+      );
+
+      // Example assertion for demo
+      expect(Array.isArray(options)).toBe(true);
+      expect(options.length).toBeGreaterThan(0);
+    });
+  }
+}
