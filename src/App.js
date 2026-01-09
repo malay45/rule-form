@@ -1,88 +1,78 @@
-import React, { useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { formConfig } from "./formConfig";
 import { applyRules } from "./ruleEngine";
 
-function App() {
-  const [selected, setSelected] = useState({
-    state: "",
-    age: "",
-    scale: "",
-    cover: "",
-  });
+export default function App() {
+  const [values, setValues] = useState({});
 
-  const handleChange = (field, value) => {
-    setSelected((prev) => ({
-      ...prev,
-      [field]: value,
-      ...(field !== "cover" && { cover: "" }), // reset cover if dependency changes
-    }));
+  const handleChange = (key, value) => {
+    setValues((prev) => ({ ...prev, [key]: value }));
   };
 
-  const coverOptions = useMemo(() => {
-    return applyRules(
-      selected,
-      formConfig.cover.value,
-      formConfig.rules,
-      "cover"
+  /* Auto-reset cover if invalid */
+  useEffect(() => {
+    const coverField = formConfig.fields.cover;
+    const { options } = applyRules(
+      values,
+      "cover",
+      coverField,
+      formConfig.rules
     );
-  }, [selected]);
+
+    if (values.cover && !options.includes(values.cover)) {
+      setValues((prev) => ({ ...prev, cover: "" }));
+    }
+  }, [values]);
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Rule-Driven Form</h2>
+    <div className="container">
+      <h2>Rule-Driven Cover Selection</h2>
 
-      {/* State */}
-      <SelectField
-        label="State"
-        value={selected.state}
-        options={formConfig.state.value}
-        onChange={(v) => handleChange("state", v)}
-      />
+      {Object.entries(formConfig.fields).map(([key, field]) => {
+        const { options, min, max } = applyRules(
+          values,
+          key,
+          field,
+          formConfig.rules
+        );
 
-      {/* Age */}
-      <SelectField
-        label="Age"
-        value={selected.age}
-        options={formConfig.age.value}
-        onChange={(v) => handleChange("age", v)}
-      />
+        return (
+          <div className="field" key={key}>
+            <label>{field.label}</label>
 
-      {/* Scale */}
-      <SelectField
-        label="Scale"
-        value={selected.scale}
-        options={formConfig.scale.value}
-        onChange={(v) => handleChange("scale", v)}
-      />
+            {field.type === "select" && (
+              <select
+                value={values[key] || ""}
+                onChange={(e) => handleChange(key, e.target.value)}
+              >
+                <option value="">Select</option>
+                {options.map((opt) => (
+                  <option key={opt} value={opt}>
+                    {opt}
+                  </option>
+                ))}
+              </select>
+            )}
 
-      {/* Cover (rule-filtered) */}
-      <SelectField
-        label="Cover"
-        value={selected.cover}
-        options={coverOptions}
-        onChange={(v) => handleChange("cover", v)}
-      />
+            {field.type === "number" && (
+              <>
+                <input
+                  type="number"
+                  min={min}
+                  max={max}
+                  value={values[key] ?? ""}
+                  onChange={(e) => handleChange(key, Number(e.target.value))}
+                />
+                <small>
+                  Min {min} / Max {max}
+                </small>
+              </>
+            )}
+          </div>
+        );
+      })}
 
-      <pre>{JSON.stringify(selected, null, 2)}</pre>
+      <pre className="debug">{JSON.stringify(values, null, 2)}</pre>
     </div>
   );
 }
-
-function SelectField({ label, value, options, onChange }) {
-  return (
-    <div style={{ marginBottom: 12 }}>
-      <label>{label}</label>
-      <br />
-      <select value={value} onChange={(e) => onChange(e.target.value)}>
-        <option value="">Select</option>
-        {options.map((opt) => (
-          <option key={opt} value={opt}>
-            {opt}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-}
-
-export default App;
